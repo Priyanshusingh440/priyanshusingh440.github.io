@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report Lab · Priyanshu Singh</title>
+<meta name="description" content="Keep, merge or retire? A small interactive game about report rationalisation using Cognos audit data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f5a524'/%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' font-family='Arial' font-weight='700' font-size='26' fill='%23111'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
+</head>
+<body>
+<div class="blob a"></div><div class="blob b"></div>
+
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><span class="mark">PS</span>Priyanshu Singh</a>
+  <button class="icon-btn" id="burger" aria-label="Menu">☰</button>
+  <nav class="menu">
+    <a href="index.html">Home</a><a href="journey.html">Journey</a><a href="skills.html">Skills</a><a href="lab.html">Lab</a><a href="contact.html">Contact</a>
+    <button class="icon-btn" id="theme" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <div class="page-head">
+    <div class="eyebrow">04 · Lab</div>
+    <h1>Keep, merge, or <span class="grad">retire?</span></h1>
+    <p>Large Cognos environments collect hundreds of reports nobody remembers building. Part of my job is deciding which ones earn their place. Judge these six from their audit stats, then reveal how I'd call each one.</p>
+  </div>
+
+  <div class="panel scorebar">
+    <div><div class="eyebrow">Your calls</div><div class="s" id="score">0 / 6 decided</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="reset">Reset</button>
+      <button class="btn primary" id="reveal">Reveal my calls</button>
+    </div>
+  </div>
+
+  <div class="lab-grid" id="grid"></div>
+  <p class="disclaimer">Sample data for illustration only — not from any employer or client environment.</p>
+
+  <section>
+    <div class="eyebrow">My process</div>
+    <h2 style="font-size:32px;margin:8px 0 22px">How I approach a rationalisation</h2>
+    <div class="steps">
+      <div class="panel spot step reveal"><h3>Inventory</h3><p>Pull every report, package and data source from the content store and audit database into one list.</p></div>
+      <div class="panel spot step reveal"><h3>Measure</h3><p>Execution history, distinct users, schedules and last-run dates show what's actually used.</p></div>
+      <div class="panel spot step reveal"><h3>Trace</h3><p>Follow each report to its package, model and source tables to see overlap and downstream impact.</p></div>
+      <div class="panel spot step reveal"><h3>Decide</h3><p>Agree keep / merge / retire with business owners, archive before deleting, and document why.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>© <span id="yr"></span> Priyanshu Singh</span><span><a href="mailto:priyanshusingh541@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/priyanshusingh440/" target="_blank" rel="noopener">LinkedIn</a></span></div></footer>
+
+<script>
+(function(){
+  var R=[
+    {id:'RPT-0142',n:'Daily Loan Balance Summary',runs:1840,users:46,last:'today',sched:'daily 7am',spark:[6,7,7,8,7,8,9,8,9,9],note:'Used by ops every morning.',ans:'keep',why:'High, steady use by many people and a live schedule. This one is core — protect it and document its lineage.'},
+    {id:'RPT-0318',n:'Loan Balance Summary v2 (copy)',runs:22,users:2,last:'41 days ago',sched:'none',spark:[3,2,2,1,1,1,0,1,0,0],note:'Same package and 90% of the same columns as RPT-0142.',ans:'merge',why:'A near-duplicate of a core report. Fold its two extra columns into RPT-0142, point both users there, then retire the copy.'},
+    {id:'RPT-0577',n:'Q3 2019 Migration Reconciliation',runs:0,users:0,last:'3 years ago',sched:'none',spark:[0,0,0,0,0,0,0,0,0,0],note:'Built for a one-time data migration.',ans:'retire',why:'Zero runs in years, tied to a finished project. Archive the spec, then retire.'},
+    {id:'RPT-0221',n:'Regulatory Exposure (Quarterly)',runs:12,users:3,last:'18 days ago',sched:'quarterly',spark:[0,0,4,0,0,4,0,0,4,0],note:'Low volume, but feeds a compliance submission.',ans:'keep',why:'Low usage is expected for a quarterly regulatory report. Usage alone would mislead here — business context matters.'},
+    {id:'RPT-0409',n:'Region Sales — North / South / East / West',runs:310,users:9,last:'2 days ago',sched:'weekly',spark:[4,4,5,4,5,4,5,5,4,5],note:'Four separate reports, identical except a region filter.',ans:'merge',why:'Replace four copies with one report and a region prompt. One thing to maintain instead of four.'},
+    {id:'RPT-0690',n:'Legacy Agent Dashboard (CQM)',runs:5,users:1,last:'60 days ago',sched:'nightly',spark:[2,1,1,1,0,1,0,0,1,0],note:'Runs nightly; output rarely opened. Uses an old CQM package.',ans:'retire',why:'A nightly schedule burning server time for one occasional viewer on a legacy package. Confirm with the owner, stop the schedule, retire.'}
+  ];
+  var grid=document.getElementById('grid'),picks={};
+  function render(){
+    grid.innerHTML=R.map(function(r,i){
+      var mx=Math.max.apply(null,r.spark)||1;
+      return'<div class="panel spot rep" data-i="'+i+'"><div class="top"><div><div class="id">'+r.id+'</div><h3>'+r.n+'</h3></div></div>'+
+      '<dl><div><dt>runs · 90d</dt><dd>'+r.runs.toLocaleString()+'</dd></div><div><dt>users</dt><dd>'+r.users+'</dd></div><div><dt>last run</dt><dd>'+r.last+'</dd></div><div><dt>schedule</dt><dd>'+r.sched+'</dd></div></dl>'+
+      '<div class="spark">'+r.spark.map(function(v){return'<i style="height:'+Math.max(6,v/mx*100)+'%"></i>';}).join('')+'</div>'+
+      '<div class="note">'+r.note+'</div>'+
+      '<div class="choices"><button data-v="keep">Keep</button><button data-v="merge">Merge</button><button data-v="retire">Retire</button></div>'+
+      '<div class="verdict"><b>My call: '+r.ans.toUpperCase()+'.</b> '+r.why+'</div></div>';}).join('');
+  }
+  function update(){var n=Object.keys(picks).length;document.getElementById('score').textContent=n+' / '+R.length+' decided';}
+  grid.addEventListener('click',function(e){var b=e.target.closest('.choices button');if(!b)return;var card=b.closest('.rep'),i=card.dataset.i;
+    if(grid.classList.contains('revealed'))return;
+    picks[i]=b.dataset.v;card.querySelectorAll('.choices button').forEach(function(x){x.classList.toggle('on',x===b);});update();});
+  document.getElementById('reveal').onclick=function(){
+    var right=0;grid.classList.add('revealed');
+    grid.querySelectorAll('.rep').forEach(function(c){var i=c.dataset.i,ok=picks[i]===R[i].ans;if(picks[i]){c.classList.add(ok?'right':'wrong');if(ok)right++;}});
+    var n=Object.keys(picks).length;
+    document.getElementById('score').textContent=n?right+' / '+n+' matched my calls':'Here are my calls';
+    toast(right===R.length?'Perfect — want a job in BI? 😄':right>=4?'Strong instincts!':'Usage numbers can be deceiving — read the notes.');
+  };
+  document.getElementById('reset').onclick=function(){picks={};grid.classList.remove('revealed');render();update();};
+  render();
+})();
+</script>
+</body>
+</html>

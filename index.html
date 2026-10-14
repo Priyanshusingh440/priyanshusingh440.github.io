@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priyanshu Singh · Cognos Developer</title>
+<meta name="description" content="Priyanshu Singh — IBM Cognos developer with 6+ years building enterprise reports, Framework Manager models and audit-driven report rationalisation.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f5a524'/%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' font-family='Arial' font-weight='700' font-size='26' fill='%23111'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
+</head>
+<body>
+<div class="blob a"></div><div class="blob b"></div>
+
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><span class="mark">PS</span>Priyanshu Singh</a>
+  <button class="icon-btn" id="burger" aria-label="Menu">☰</button>
+  <nav class="menu">
+    <a href="index.html">Home</a><a href="journey.html">Journey</a><a href="skills.html">Skills</a><a href="lab.html">Lab</a><a href="contact.html">Contact</a>
+    <button class="icon-btn" id="theme" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <span class="status"><i></i>Open to Cognos &amp; BI roles</span>
+      <h1>I build reports<br>people actually <span class="rot" id="rot">trust</span></h1>
+      <p class="lede">I'm a Cognos developer with 6+ years across Finastra, Manhattan Associates and Capgemini — modelling data in Framework Manager, building reports in Cognos Analytics, and reading audit data to decide which reports deserve to live.</p>
+      <div class="cta">
+        <a class="btn primary" href="journey.html">See my journey →</a>
+        <a class="btn" href="lab.html">Try the report lab</a>
+      </div>
+    </div>
+
+    <div class="panel console" id="console">
+      <div class="bar"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span><div class="t">priyanshu_db · ask me anything</div></div>
+      <div class="body" id="out"></div>
+      <div class="presets">
+        <button data-q="SELECT * FROM about_me;">about_me</button>
+        <button data-q="SELECT company, role, years FROM experience;">experience</button>
+        <button data-q="SELECT tool, level FROM stack ORDER BY level DESC;">stack</button>
+        <button data-q="SELECT * FROM superpowers;">superpowers</button>
+        <button data-q="SELECT channel, value FROM contact;">contact</button>
+      </div>
+      <form id="qform"><input id="qin" placeholder="type a query, or try: help" autocomplete="off" aria-label="Query"><button>Run</button></form>
+    </div>
+  </section>
+
+  <section class="stats reveal">
+    <div class="panel spot stat"><b data-count="6" data-suffix="+">0</b><span>years in Cognos BI</span></div>
+    <div class="panel spot stat"><b data-count="3">0</b><span>companies, one specialism</span></div>
+    <div class="panel spot stat"><b data-count="3">0</b><span>databases traced daily</span></div>
+    <div class="panel spot stat"><b>11→12</b><span>Cognos Analytics versions certified</span></div>
+  </section>
+
+  <section class="reveal">
+    <div class="panel lineage">
+      <div class="lineage-head">
+        <div><div class="eyebrow">How my work flows</div><h2>From raw tables to a report someone opens on Monday</h2></div>
+        <p>Click any box to trace its lineage — the same way I trace a report back to its source before changing or retiring it.</p>
+      </div>
+      <div class="lineage-scroll">
+        <svg id="lin" viewBox="0 0 900 330" role="img" aria-label="Data lineage diagram"></svg>
+      </div>
+      <div class="lineage-info" id="linfo">Pick a node to see what I do at that layer.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="explore">
+      <a href="journey.html" class="panel spot reveal"><div class="n">01 / journey</div><h3>Six years, three companies</h3><p>An interactive timeline of what I built at each stop, and what each one taught me.</p><span class="go">Open timeline →</span></a>
+      <a href="skills.html" class="panel spot reveal"><div class="n">02 / skills</div><h3>A crosstab of my skills</h3><p>Fitting for a Cognos developer: a heatmap of where and how deeply I've used each skill.</p><span class="go">Explore skills →</span></a>
+      <a href="lab.html" class="panel spot reveal"><div class="n">03 / lab</div><h3>Keep, merge or retire?</h3><p>Play my day job: judge six sample reports from their audit stats, then see how I'd call it.</p><span class="go">Play the lab →</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>© <span id="yr"></span> Priyanshu Singh</span><span><a href="mailto:priyanshusingh541@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/priyanshusingh440/" target="_blank" rel="noopener">LinkedIn</a></span></div></footer>
+
+<script>
+/* rotating word */
+(function(){
+  var words=['trust','use','keep','understand'], el=document.getElementById('rot'), i=0;
+  function type(w,cb){var n=0;(function t(){el.textContent=w.slice(0,++n);if(n<w.length)setTimeout(t,70);else setTimeout(cb,1800);})();}
+  function erase(cb){(function e(){var s=el.textContent;el.textContent=s.slice(0,-1);if(s.length>1)setTimeout(e,40);else cb();})();}
+  function loop(){erase(function(){i=(i+1)%words.length;type(words[i],loop);});}
+  setTimeout(loop,2200);
+})();
+
+/* SQL console */
+(function(){
+  var out=document.getElementById('out'), form=document.getElementById('qform'), inp=document.getElementById('qin');
+  var data={
+    about:{cols:['field','value'],rows:[['name','Priyanshu Singh'],['role','Software Engineer II (R&D), Finastra'],['focus','IBM Cognos Analytics · Framework Manager · SQL'],['based_in','Bengaluru, India'],['education','B.Tech CSE, BBD Engineering College (2015–19)']]},
+    exp:{cols:['company','role','years'],rows:[['Finastra','Software Engineer II (R&D)','2024 – now'],['Manhattan Associates','Software Engineer (CTSO SCI)','2023 – 2024'],['Capgemini','Associate Consultant','2020 – 2023']]},
+    stack:{cols:['tool','level'],rows:[['Cognos Analytics 11/12','●●●●●'],['Framework Manager','●●●●●'],['SQL (Oracle · SQL Server · PostgreSQL)','●●●●○'],['Cognos audit data','●●●●○'],['Azure · AKS · Helm','●●●○○'],['Power BI · SSRS','●●○○○']]},
+    sup:{cols:['superpower','evidence'],rows:[['Report rationalisation','Audit data → keep / merge / retire calls'],['Lineage tracing','Report → package → model → source table'],['Platform work','Upgrades, containers on AKS, CQM → DQM'],['Talking to business','KPI definitions agreed before a line of SQL']]},
+    contact:{cols:['channel','value'],rows:[['email','priyanshusingh541@gmail.com'],['linkedin','linkedin.com/in/priyanshusingh440'],['page','contact.html']]}
+  };
+  function pick(q){
+    q=q.toLowerCase();
+    if(/help|\?/.test(q))return 'help';
+    if(/drop|delete|truncate|update|insert/.test(q))return 'nope';
+    if(/contact|email|hire|reach/.test(q))return 'contact';
+    if(/super|power|strength|best/.test(q))return 'sup';
+    if(/stack|skill|tool|tech/.test(q))return 'stack';
+    if(/exp|work|job|company|career|role/.test(q))return 'exp';
+    if(/about|who|me|name|\*/.test(q))return 'about';
+    return null;
+  }
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+  var busy=false;
+  function run(q){
+    if(busy||!q.trim())return; busy=true;
+    var line=document.createElement('div');line.className='q';out.appendChild(line);
+    var n=0;(function t(){line.textContent=q.slice(0,++n);out.scrollTop=out.scrollHeight;if(n<q.length)setTimeout(t,14);else done();})();
+    function done(){
+      var k=pick(q),html;
+      if(k==='help')html='<div style="color:var(--muted);margin:6px 0 14px">tables: about_me, experience, stack, superpowers, contact<br>anything with those words works — this console is forgiving.</div>';
+      else if(k==='nope')html='<div class="err">ERROR: read-only. I protect production data, even my own 😉</div>';
+      else if(!k)html='<div class="err">0 rows. Try <b>help</b>, or ask about experience, stack or contact.</div>';
+      else{var d=data[k];html='<table><tr>'+d.cols.map(function(c){return'<th>'+c+'</th>';}).join('')+'</tr>'+d.rows.map(function(r){return'<tr>'+r.map(function(c){return'<td>'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table><div style="color:var(--muted);font-size:11px;margin:-8px 0 14px">'+d.rows.length+' rows · 0.0'+(2+Math.floor(Math.random()*7))+'s</div>';}
+      var box=document.createElement('div');box.innerHTML=html;out.appendChild(box);out.scrollTop=out.scrollHeight;busy=false;
+    }
+  }
+  document.querySelectorAll('.presets button').forEach(function(b){b.addEventListener('click',function(){run(b.dataset.q);});});
+  form.addEventListener('submit',function(e){e.preventDefault();run(inp.value);inp.value='';});
+  setTimeout(function(){run('SELECT * FROM about_me;');},600);
+})();
+
+/* lineage diagram */
+(function(){
+  var svg=document.getElementById('lin'),NS='http://www.w3.org/2000/svg';
+  var cols=[{x:20,label:'SOURCES'},{x:250,label:'MODEL'},{x:480,label:'PACKAGES'},{x:710,label:'OUTPUT'}];
+  var nodes=[
+    {id:'ora',c:0,y:50,t:'Oracle',s:'loan data',d:'<b>Sources.</b> I write and tune SQL against Oracle, SQL Server and PostgreSQL to validate mappings, calculations and the numbers a report finally shows.'},
+    {id:'mss',c:0,y:140,t:'SQL Server',s:'warehouse',d:'<b>Sources.</b> Views and stored procedures here feed Framework Manager models; query tuning starts at this layer.'},
+    {id:'pg',c:0,y:230,t:'PostgreSQL',s:'product db',d:'<b>Sources.</b> Part of the Finastra stack I trace lineage across when assessing downstream impact.'},
+    {id:'fm',c:1,y:95,t:'Framework Manager',s:'query subjects',d:'<b>Model.</b> Metadata models, relationships and layered security; I also converted CQM models to DQM for newer Cognos versions.'},
+    {id:'dm',c:1,y:200,t:'Data modules',s:'self-service',d:'<b>Model.</b> Datasets and data modules for faster, lighter reporting where a full FM model is overkill.'},
+    {id:'pk1',c:2,y:70,t:'Loan IQ pkg',s:'published',d:'<b>Packages.</b> Published packages for Loan IQ and Datanet. Audit data tells me which reports depend on each one before anything changes.'},
+    {id:'pk2',c:2,y:180,t:'Datanet pkg',s:'published',d:'<b>Packages.</b> Each package is certified against new Cognos releases (11.x and 12.x) before shipping to customers.'},
+    {id:'rp',c:3,y:40,t:'Reports',s:'list · crosstab',d:'<b>Reports.</b> List, crosstab, grouped, prompt-driven, drill-down and drill-through reports, plus JavaScript customisation.'},
+    {id:'db',c:3,y:135,t:'Dashboards',s:'KPIs',d:'<b>Dashboards.</b> KPI views agreed with business teams first, so the numbers mean the same thing in every meeting.'},
+    {id:'au',c:3,y:230,t:'Audit reports',s:'usage · runs',d:'<b>Audit.</b> Reports about the reports: execution history, users, schedules — the evidence behind keep, merge or retire decisions.'}
+  ];
+  var edges=[['ora','fm'],['mss','fm'],['mss','dm'],['pg','fm'],['pg','dm'],['fm','pk1'],['fm','pk2'],['dm','pk2'],['pk1','rp'],['pk1','db'],['pk2','db'],['pk2','au'],['pk1','au']];
+  var W=170,H=52,by={};nodes.forEach(function(n){n.x=cols[n.c].x;by[n.id]=n;});
+  cols.forEach(function(c){var t=document.createElementNS(NS,'text');t.setAttribute('x',c.x);t.setAttribute('y',18);t.setAttribute('class','col-label');t.textContent=c.label;svg.appendChild(t);});
+  var eEls=edges.map(function(e){var a=by[e[0]],b=by[e[1]],p=document.createElementNS(NS,'path'),x1=a.x+W,y1=a.y+H/2,x2=b.x,y2=b.y+H/2,mx=(x1+x2)/2;
+    p.setAttribute('d','M'+x1+','+y1+' C'+mx+','+y1+' '+mx+','+y2+' '+x2+','+y2);p.setAttribute('class','edge');svg.appendChild(p);return{el:p,a:e[0],b:e[1]};});
+  var nEls={};
+  nodes.forEach(function(n){var g=document.createElementNS(NS,'g');g.setAttribute('class','node');g.setAttribute('tabindex','0');
+    g.innerHTML='<rect x="'+n.x+'" y="'+n.y+'" width="'+W+'" height="'+H+'" rx="12"/><text x="'+(n.x+14)+'" y="'+(n.y+23)+'">'+n.t+'</text><text class="sub" x="'+(n.x+14)+'" y="'+(n.y+40)+'">'+n.s+'</text>';
+    svg.appendChild(g);nEls[n.id]=g;
+    function act(){select(n.id);}g.addEventListener('click',act);g.addEventListener('keydown',function(e){if(e.key==='Enter')act();});});
+  function related(id){var set={},q=[id];set[id]=1;
+    function walk(dir){var st=[id];while(st.length){var c=st.pop();eEls.forEach(function(e){var f=dir?e.a:e.b,t=dir?e.b:e.a;if(f===c&&!set[t]){set[t]=1;st.push(t);}});}}
+    walk(true);walk(false);return set;}
+  function select(id){var r=related(id);
+    Object.keys(nEls).forEach(function(k){nEls[k].classList.toggle('on',k===id);nEls[k].classList.toggle('dim',!r[k]);});
+    eEls.forEach(function(e){var on=r[e.a]&&r[e.b];e.el.classList.toggle('on',on);e.el.classList.toggle('dim',!on);});
+    document.getElementById('linfo').innerHTML=by[id].d;}
+})();
+</script>
+</body>
+</html>

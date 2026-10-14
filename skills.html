@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills · Priyanshu Singh</title>
+<meta name="description" content="Skills of Priyanshu Singh as an interactive crosstab: Cognos, Framework Manager, SQL, audit analysis and platform work.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f5a524'/%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' font-family='Arial' font-weight='700' font-size='26' fill='%23111'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
+</head>
+<body>
+<div class="blob a"></div><div class="blob b"></div>
+
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><span class="mark">PS</span>Priyanshu Singh</a>
+  <button class="icon-btn" id="burger" aria-label="Menu">☰</button>
+  <nav class="menu">
+    <a href="index.html">Home</a><a href="journey.html">Journey</a><a href="skills.html">Skills</a><a href="lab.html">Lab</a><a href="contact.html">Contact</a>
+    <button class="icon-btn" id="theme" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <div class="page-head">
+    <div class="eyebrow">03 · Skills</div>
+    <h1>My skills, as a <span class="grad">crosstab</span></h1>
+    <p>I spend my days building crosstabs, so here's mine. Rows are skills, columns are where I used them. Click any cell to see the evidence, or click a company to spotlight it.</p>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="on" data-f="all">All</button>
+    <button data-f="build">Build</button>
+    <button data-f="model">Model</button>
+    <button data-f="analyse">Analyse</button>
+    <button data-f="platform">Platform</button>
+  </div>
+
+  <div class="panel reveal" style="padding:18px">
+    <div class="xtab-wrap"><table class="xtab" id="xtab"></table></div>
+    <div class="legend">
+      <span><i style="background:var(--surface2);border:1px dashed var(--line2)"></i>not used</span>
+      <span><i style="background:color-mix(in srgb,var(--amber) 22%,var(--surface2))"></i>touched</span>
+      <span><i style="background:color-mix(in srgb,var(--amber) 52%,var(--surface2))"></i>regular</span>
+      <span><i style="background:var(--amber)"></i>core of the job</span>
+    </div>
+  </div>
+  <div class="panel evidence" id="ev"><div class="eyebrow">Evidence</div><p>Click a cell to see what I actually did with that skill there.</p></div>
+
+  <section>
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px">
+      <div><div class="eyebrow">Toolbox</div><h2 style="font-size:32px;margin-top:8px">Everything I reach for</h2></div>
+      <input id="q" placeholder="Filter tools… try “sql” or “azure”" aria-label="Filter tools">
+    </div>
+    <div class="toolbox reveal" id="tools"></div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>© <span id="yr"></span> Priyanshu Singh</span><span><a href="mailto:priyanshusingh541@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/priyanshusingh440/" target="_blank" rel="noopener">LinkedIn</a></span></div></footer>
+
+<script>
+(function(){
+  var cos=['Capgemini','Manhattan','Finastra'];
+  // [skill, group, sub, levels per company, evidence per company]
+  var S=[
+    ['Report development','build','list · crosstab · drill',[3,2,3],['Built list, crosstab, grouped, drill-down and drill-through reports from scratch for client requirements.','Developed and maintained Cognos 11 reports and improved the performance of customer-built ones.','Lead report development for Loan IQ and Datanet, including prompt-based and parameterised reports.']],
+    ['Dashboards','build','KPIs · visual',[2,1,2],['Created dashboards to present critical company data in a single view.','Supported dashboard usage and trained users on ad-hoc reporting.','Build dashboards to customer requirements with the business team.']],
+    ['JavaScript in reports','build','custom controls',[0,0,2],['—','—','Create custom reports configured with JavaScript.']],
+    ['Framework Manager','model','packages · relationships',[3,2,3],['Enhanced models, packages, relationships and data sources for changing needs.','Created and published packages; built DMR models.','Create and upgrade FM models for Loan IQ and Datanet and publish them.']],
+    ['Security modelling','model','roles · groups',[2,2,2],['Created users, defined roles and assigned groups.','Implemented security at multiple levels in Framework Manager.','Set up authentication and configured users, groups and roles.']],
+    ['CQM → DQM','model','query mode migration',[0,0,2],['—','—','Converted Compatible Query Mode models to Dynamic Query Mode.']],
+    ['SQL & tuning','analyse','Oracle · MSSQL · PG',[3,2,3],['Wrote complex SQL, hand-modified report SQL and tuned slow queries.','Built SQL-based reports on Oracle and MSSQL.','Trace and validate data across Oracle, SQL Server and PostgreSQL.']],
+    ['Audit analysis','analyse','usage · runs · schedules',[0,3,3],['—','Built audit reports on execution history, user activity, schedules and usage trends.','Use audit data to review execution, usage and package dependencies.']],
+    ['Rationalisation','analyse','keep · merge · retire',[1,3,3],['Clarified KPIs to standardise overlapping reports.','Identified duplicate, obsolete and underused reports; documented findings for retirement.','Drive standardisation, consolidation and retirement decisions with impact analysis.']],
+    ['Data lineage','analyse','source → report',[1,2,3],['Validated source mappings in SQL.','Reviewed report-to-package and data-source dependencies.','Trace and document lineage across three databases, packages and calculations.']],
+    ['Install & upgrade','platform','Linux · Windows · cloud',[2,3,3],['Installed and configured Cognos on Linux and Windows, including distributed setups.','Installed and upgraded Cognos Analytics on Linux, Windows and GCP.','Perform major and minor upgrades and certify new releases.']],
+    ['Containers / AKS','platform','Azure · Helm',[0,0,3],['—','—','Deploy IBM-certified Cognos containers to Azure Kubernetes Service.']],
+    ['Performance RCA','platform','logs · tuning',[2,3,2],['Improved the performance of existing reports.','Analysed logs and tables to root-cause slow environments and reports.','Run RCA on report performance issues and ship the fix.']]
+  ];
+  var tbl=document.getElementById('xtab'),ev=document.getElementById('ev'),lvl=['not used','touched','regular','core of the job'];
+  var h='<tr><th>skill</th>'+cos.map(function(c,i){return'<th class="co" data-c="'+i+'">'+c+'</th>';}).join('')+'</tr>';
+  S.forEach(function(s,r){h+='<tr data-g="'+s[1]+'"><td class="sk">'+s[0]+'<small>'+s[2]+'</small></td>'+s[3].map(function(l,c){return'<td class="cell" data-l="'+l+'" data-r="'+r+'" data-c="'+c+'" tabindex="0" aria-label="'+s[0]+' at '+cos[c]+': '+lvl[l]+'"></td>';}).join('')+'</tr>';});
+  tbl.innerHTML=h;
+  function evid(r,c){var s=S[r];ev.innerHTML='<div class="eyebrow">'+s[0]+' · '+cos[c]+' · '+lvl[s[3][c]]+'</div><p><b>'+s[4][c]+'</b></p>';}
+  tbl.addEventListener('click',function(e){var t=e.target.closest('.cell');if(t)evid(+t.dataset.r,+t.dataset.c);
+    var th=e.target.closest('th.co');if(th){var c=+th.dataset.c,on=!th.classList.contains('on');
+      tbl.querySelectorAll('th.co').forEach(function(x){x.classList.remove('on');});
+      tbl.querySelectorAll('.cell').forEach(function(x){x.style.opacity=(!on||+x.dataset.c===c)?'':'.18';});
+      if(on)th.classList.add('on');}});
+  tbl.addEventListener('keydown',function(e){var t=e.target.closest('.cell');if(t&&e.key==='Enter')evid(+t.dataset.r,+t.dataset.c);});
+  document.querySelectorAll('#filters button').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('#filters button').forEach(function(x){x.classList.toggle('on',x===b);});
+    tbl.querySelectorAll('tr[data-g]').forEach(function(tr){tr.classList.toggle('hidden',b.dataset.f!=='all'&&tr.dataset.g!==b.dataset.f);});};});
+
+  var T=[['IBM Cognos Analytics','11 · 12',95],['Framework Manager','modelling',92],['Report Studio','authoring',92],['SQL','query · tune',88],['Oracle','database',80],['SQL Server','database',80],['PostgreSQL','database',72],['Cognos audit DB','usage data',85],['Azure / AKS','cloud',68],['Kubernetes · Helm','containers',62],['Linux (RHEL)','servers',70],['Git · GitHub','versioning',70],['JavaScript','report UI',55],['Power BI','other BI',50],['SSRS','other BI',45],['Tableau','other BI',35]];
+  var box=document.getElementById('tools');
+  box.innerHTML=T.map(function(t){return'<div class="panel spot tool" data-n="'+(t[0]+' '+t[1]).toLowerCase()+'"><div class="tn">'+t[0]+'</div><div class="tg">'+t[1]+'</div><div class="bar"><i data-w="'+t[2]+'"></i></div></div>';}).join('');
+  document.getElementById('q').addEventListener('input',function(){var v=this.value.toLowerCase().trim();
+    box.querySelectorAll('.tool').forEach(function(el){el.style.display=!v||el.dataset.n.indexOf(v)>-1?'':'none';});});
+})();
+</script>
+</body>
+</html>
